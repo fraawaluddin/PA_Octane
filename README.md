@@ -83,9 +83,100 @@ Dokumen rancangan digunakan sebagai acuan dalam pengembangan fitur dan struktur 
 | ERD Relational | Rancangan relasi tabel database | 
 
 ### Flowchart
-![Flowchart OCTANE](docs/Flowchart.png)
 
+**Flowchart Halaman 1 – Proses Login**
 
+Flowchart ini menggambarkan proses login pada sistem OCTANE, dimulai dari inisialisasi koneksi database menggunakan JDBC, kemudian pengguna memasukkan username dan password. Sistem akan memeriksa kecocokan data akun serta status keaktifan pengguna. Jika berhasil, pengguna diarahkan ke menu sesuai perannya, yaitu Administrator, Petugas Penyimpanan, atau Petugas SPBU. Jika proses login gagal atau koneksi database bermasalah, sistem akan menampilkan pesan kesalahan. Proses diakhiri dengan logout dan penyelesaian sesi pengguna.
+
+<img width="878" height="1221" alt="image" src="https://github.com/user-attachments/assets/8e3ac1b9-7d7f-4bc0-afd4-6da211ea0ec3" />
+
+---
+
+**Flowchart Halaman 2 – Proses Menu Administrator**
+
+Flowchart ini menggambarkan aktivitas Administrator setelah berhasil login. Administrator dapat mengelola akun pengguna, data SPBU, jenis BBM, dan lokasi penyimpanan. Selain itu, Administrator dapat melihat stok seluruh lokasi dan SPBU, riwayat penerimaan dan distribusi BBM, serta laporan persediaan dan distribusi berdasarkan filter yang dipilih. Setiap aktivitas dapat diulang dengan kembali ke menu Administrator atau diakhiri dengan melakukan logout.
+
+<img width="716" height="1234" alt="image" src="https://github.com/user-attachments/assets/fcc4bab8-de67-4526-98a4-3fc6fdc22eeb" />
+
+---
+
+**Flowchart Halaman 3 – Proses Kelola Akun Pengguna**
+
+Flowchart ini menggambarkan proses pengelolaan akun pengguna oleh Administrator, yang meliputi penambahan, melihat, mengubah, dan menghapus akun. Pada proses penambahan dan perubahan, sistem melakukan validasi data sebelum menyimpan perubahan ke database. Sementara itu, proses penghapusan mempertimbangkan apakah akun sudah digunakan dalam transaksi. Jika sudah, akun akan dinonaktifkan agar riwayat transaksi tetap terjaga. Setelah setiap proses selesai, Administrator dapat kembali ke menu Kelola Akun Pengguna.
+
+<img width="940" height="1147" alt="image" src="https://github.com/user-attachments/assets/4ef5481c-9dad-43ad-97ce-7b092d9b5f73" />
+
+---
+
+**Flowchart Halaman 4 – Proses Tambah Akun Pengguna**
+
+Flowchart ini menggambarkan proses penambahan akun pengguna oleh Administrator. Administrator memilih peran akun yang akan dibuat, yaitu Administrator, Petugas Penyimpanan, atau Petugas SPBU, kemudian mengisi data sesuai dengan peran yang dipilih. Sistem melakukan validasi terhadap kelengkapan data, keunikan username, dan data khusus setiap peran. Jika data valid, akun disimpan ke database dan sistem menampilkan pesan keberhasilan. Jika data tidak valid, sistem menampilkan pesan kesalahan agar Administrator dapat memperbaiki input.
+
+<img width="750" height="895" alt="image" src="https://github.com/user-attachments/assets/fe302768-bcbb-4b59-95b8-cb50b0a85eb6" />
+
+---
+
+**Flowchart Halaman 5 – Proses Kelola Data SPBU**
+
+Flowchart ini menggambarkan proses pengelolaan data SPBU oleh Administrator, yang meliputi penambahan, melihat, mengubah, dan menghapus data SPBU. Pada proses penambahan dan perubahan, sistem melakukan validasi kelengkapan data serta keunikan nama SPBU sebelum menyimpan perubahan ke database. Sementara itu, penghapusan data mempertimbangkan apakah SPBU sudah digunakan dalam transaksi. Jika sudah, SPBU akan dinonaktifkan agar riwayat transaksi tetap terjaga. Setelah proses selesai, Administrator dapat kembali ke menu Kelola Data SPBU.
+
+<img width="857" height="1008" alt="image" src="https://github.com/user-attachments/assets/09b8defb-0a6b-4b14-8d67-1588b897d6bd" />
+
+---
+
+**Flowchart Halaman 6 – Proses Kelola Jenis BBM**
+
+Flowchart ini menggambarkan proses pengelolaan data jenis BBM oleh Administrator, yang meliputi penambahan, melihat, mengubah, dan menghapus data jenis BBM. Pada proses penambahan dan perubahan, sistem melakukan validasi kelengkapan data serta keunikan nama BBM sebelum menyimpan perubahan ke database. Sementara itu, penghapusan data mempertimbangkan apakah jenis BBM sudah digunakan dalam transaksi. Jika sudah, jenis BBM akan dinonaktifkan agar riwayat transaksi tetap terjaga. Setelah proses selesai, Administrator dapat kembali ke menu Kelola Jenis BBM.
+
+<img width="756" height="886" alt="image" src="https://github.com/user-attachments/assets/4e47d2d4-ecee-4634-b523-7ad4dca6b3f3" />
+
+---
+
+**Flowchart Halaman 7 – Proses Kelola Lokasi Penyimpanan**
+
+Flowchart ini menggambarkan proses pengelolaan data lokasi penyimpanan oleh Administrator, yang meliputi penambahan, melihat, mengubah, dan menghapus data lokasi penyimpanan. Pada proses penambahan dan perubahan, sistem melakukan validasi kelengkapan data serta keunikan nama lokasi sebelum menyimpan perubahan ke database. Sementara itu, penghapusan data mempertimbangkan apakah lokasi sudah digunakan dalam transaksi atau penempatan petugas. Jika masih digunakan, lokasi akan dinonaktifkan agar riwayat transaksi tetap terjaga. Setelah proses selesai, Administrator dapat kembali ke menu Kelola Lokasi Penyimpanan.
+
+<img width="875" height="1029" alt="image" src="https://github.com/user-attachments/assets/b9db9bcf-984f-4eba-bc7f-d55f764574cb" />
+
+---
+
+**Flowchart Halaman 8 – Proses Menu Petugas Penyimpanan**
+
+Flowchart ini menggambarkan aktivitas Petugas Penyimpanan setelah berhasil login. Petugas dapat mencatat penerimaan BBM, mencatat distribusi BBM, melihat stok pada lokasi penyimpanan, serta melihat riwayat penerimaan dan distribusi BBM. Setiap aktivitas menampilkan data yang diambil dari database. Petugas juga dapat kembali ke menu utama untuk memilih aktivitas lainnya atau melakukan logout untuk mengakhiri sesi.
+
+<img width="783" height="775" alt="image" src="https://github.com/user-attachments/assets/288760f7-02a7-4a33-a8cf-24f4242bd520" />
+
+---
+
+**Flowchart Halaman 9 – Proses Catat Penerimaan BBM**
+
+Flowchart ini menggambarkan proses pencatatan penerimaan BBM oleh Petugas Penyimpanan. Petugas menentukan lokasi penyimpanan berdasarkan data penempatan akun yang login, kemudian memasukkan jenis BBM, jumlah yang diterima, dan tanggal penerimaan. Sistem melakukan validasi terhadap kelengkapan data, jumlah penerimaan, serta status aktif jenis BBM dan lokasi penyimpanan. Jika data valid, sistem menyimpan transaksi penerimaan sekaligus memperbarui stok penyimpanan dalam satu transaksi database. Jika proses berhasil, hasil penerimaan ditampilkan. Apabila terjadi kegagalan, transaksi dibatalkan dan sistem menampilkan pesan kesalahan.
+
+<img width="740" height="1131" alt="image" src="https://github.com/user-attachments/assets/8b1579b0-e895-417d-b130-fcfba87d7151" />
+
+---
+
+**Flowchart Halaman 10 – Proses Catat Distribusi BBM**
+
+Flowchart ini menggambarkan proses pencatatan distribusi BBM oleh Petugas Penyimpanan. Petugas menentukan lokasi asal berdasarkan data penempatan akun yang login, kemudian memasukkan jenis BBM, jumlah yang dikirim, dan SPBU tujuan. Sistem melakukan validasi data dan memeriksa ketersediaan stok pada lokasi asal. Jika stok mencukupi, sistem menyimpan data distribusi dengan status menunggu konfirmasi sekaligus mengurangi stok penyimpanan dalam satu transaksi database. Jika transaksi berhasil, hasil distribusi ditampilkan. Apabila stok tidak mencukupi atau transaksi gagal, sistem menampilkan pesan kesalahan.
+
+<img width="772" height="1210" alt="image" src="https://github.com/user-attachments/assets/4ef01496-98fe-485d-b862-3edbb1a1dfc9" />
+
+---
+
+**Flowchart Halaman 11 – Proses Menu Petugas SPBU**
+
+Flowchart ini menggambarkan aktivitas Petugas SPBU setelah berhasil login. Petugas dapat melakukan konfirmasi penerimaan BBM, melihat daftar pengiriman yang ditujukan ke SPBU tempat bertugas, melihat stok BBM, serta melihat riwayat distribusi. Sistem mengambil dan menampilkan data berdasarkan penempatan petugas pada SPBU terkait. Petugas dapat kembali ke menu utama untuk memilih aktivitas lainnya atau melakukan logout untuk mengakhiri sesi.
+
+<img width="772" height="681" alt="image" src="https://github.com/user-attachments/assets/b8027542-e5b7-4a7e-be7b-d339a2061dbf" />
+
+---
+
+**Flowchart Halaman 12 – Proses Konfirmasi Penerimaan BBM**
+
+Flowchart ini menggambarkan proses konfirmasi penerimaan BBM oleh Petugas SPBU. Petugas memilih pengiriman yang akan dikonfirmasi, kemudian sistem memeriksa kesesuaian SPBU tujuan dan status konfirmasi pengiriman. Petugas memasukkan jumlah aktual BBM yang diterima beserta keterangan jika diperlukan. Sistem membandingkan jumlah yang dikirim dengan jumlah aktual yang diterima. Jika terdapat perbedaan, sistem mencatat selisih sebagai status perlu pemeriksaan. Selanjutnya, sistem menyimpan data konfirmasi, memperbarui status distribusi, dan menambahkan stok SPBU sesuai jumlah aktual dalam satu transaksi database. Jika penyimpanan berhasil, hasil konfirmasi ditampilkan.
+
+<img width="586" height="1155" alt="image" src="https://github.com/user-attachments/assets/d3401eed-2f93-43a4-88c3-20f386994ef1" />
 
 ### Use Case Diagram
 
