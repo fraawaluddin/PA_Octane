@@ -1,0 +1,466 @@
+package view;
+
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import controller.LaporanController;
+import java.util.List;
+import model.RiwayatPenerimaanModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+
+public class RiwayatPenerimaan extends javax.swing.JFrame {
+
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RiwayatPenerimaan.class.getName());
+    
+    public RiwayatPenerimaan() {
+        initComponents();
+        tampilkanIdentitasPengguna();
+        navbar.setPreferredSize(new java.awt.Dimension(350, 768));
+        navbar.setMinimumSize(new java.awt.Dimension(350, 0));
+        TampilanTabel.rapikanSemua(this);
+        setSize(1366, 768);
+        setMinimumSize(new java.awt.Dimension(1100, 700));
+
+        setLocationRelativeTo(null);
+        konfigurasiTabelPenerimaan();
+        tampilDataRiwayatPenerimaan();
+    }
+
+    private void tampilkanIdentitasPengguna() {
+        String namaPengguna = Session.namaLengkap;
+        String peranPengguna = Session.peran;
+        String lokasiPengguna = Session.lokasi;
+
+        nama.setText(namaPengguna == null || namaPengguna.isBlank()
+                ? "Pengguna" : namaPengguna);
+
+        String identitasPeran = peranPengguna == null || peranPengguna.isBlank()
+                ? "Belum ada sesi" : peranPengguna;
+
+        if (lokasiPengguna != null && !lokasiPengguna.isBlank()) {
+            identitasPeran += " · " + lokasiPengguna;
+        }
+
+        sebagai.setText(identitasPeran);
+    }
+
+    private void konfigurasiTabelPenerimaan() {
+        table_riwayat_penerimaan.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table_riwayat_penerimaan.setFillsViewportHeight(true);
+        table_riwayat_penerimaan.setRowHeight(36);
+        table_riwayat_penerimaan.setFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+        table_riwayat_penerimaan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table_riwayat_penerimaan.setShowHorizontalLines(true);
+        table_riwayat_penerimaan.setShowVerticalLines(true);
+        table_riwayat_penerimaan.setGridColor(new java.awt.Color(220, 225, 230));
+        table_riwayat_penerimaan.setSelectionBackground(new java.awt.Color(255, 235, 215));
+        table_riwayat_penerimaan.setSelectionForeground(new java.awt.Color(45, 45, 45));
+        table_riwayat_penerimaan.getTableHeader().setReorderingAllowed(false);
+        table_riwayat_penerimaan.getTableHeader().setResizingAllowed(true);
+        table_riwayat_penerimaan.getTableHeader().setPreferredSize(new java.awt.Dimension(0, 40));
+        table_riwayat_penerimaan.getTableHeader().setFont(new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 12));
+        int[] widths = {110, 175, 190, 175, 100, 260};
+        for (int i = 0; i < widths.length && i < table_riwayat_penerimaan.getColumnModel().getColumnCount(); i++)
+            table_riwayat_penerimaan.getColumnModel().getColumn(i).setPreferredWidth(widths[i]);
+        DefaultTableCellRenderer center = new DefaultTableCellRenderer();
+        center.setHorizontalAlignment(SwingConstants.CENTER);
+        table_riwayat_penerimaan.getColumnModel().getColumn(0).setCellRenderer(center);
+        DefaultTableCellRenderer amount = new DefaultTableCellRenderer() {
+            private final DecimalFormat format = new DecimalFormat("#,##0.##");
+            @Override protected void setValue(Object value) {
+                setText(value instanceof BigDecimal ? format.format(value) : value == null ? "—" : value.toString());
+            }
+        };
+        amount.setHorizontalAlignment(SwingConstants.RIGHT);
+        table_riwayat_penerimaan.getColumnModel().getColumn(3).setCellRenderer(amount);
+        DefaultTableCellRenderer date = new DefaultTableCellRenderer() {
+            private final SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+            @Override protected void setValue(Object value) {
+                setText(value instanceof java.util.Date ? format.format(value) : value == null ? "—" : value.toString());
+            }
+        };
+        table_riwayat_penerimaan.getColumnModel().getColumn(1).setCellRenderer(date);
+        table_riwayat_penerimaan.setRowSorter(new TableRowSorter<>(table_riwayat_penerimaan.getModel()));
+    }
+
+    public void tampilDataRiwayatPenerimaan() {
+        DefaultTableModel model = new DefaultTableModel(new Object[][]{}, new String[]{
+            "ID PENERIMAAN", "TANGGAL", "JENIS BBM", "JUMLAH DITERIMA (LITER)", "PETUGAS PENCATAT"
+        }) {
+            @Override public boolean isCellEditable(int row, int column) { return false; }
+            @Override public Class<?> getColumnClass(int column) {
+                switch (column) {
+                    case 0: return Integer.class;
+                    case 1: return java.sql.Timestamp.class;
+                    case 3: return BigDecimal.class;
+                    default: return String.class;
+                }
+            }
+        };
+        try {
+            List<RiwayatPenerimaanModel> rows =
+                    new LaporanController().getRiwayatPenerimaan(Session.idLokasiPenyimpanan);
+            for (RiwayatPenerimaanModel row : rows)
+                model.addRow(new Object[]{row.idPenerimaan(), row.tanggalPenerimaan(),
+                    row.namaBbm(), row.jumlahDiterima(), row.namaPetugas()});
+            table_riwayat_penerimaan.setModel(model);
+            konfigurasiTabelPenerimaan();
+        } catch (SQLException | IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                "Gagal menampilkan riwayat penerimaan:\\n" + e.getMessage(),
+                "Kesalahan Database", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        jFrame1 = new javax.swing.JFrame();
+        navbar = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        catat_penerimaan_bbm = new javax.swing.JButton();
+        dashboard1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        catat_distribusi_bbm = new javax.swing.JButton();
+        stok_lokasi = new javax.swing.JButton();
+        riwayat_penerimaan = new javax.swing.JButton();
+        riwayat_distribusi = new javax.swing.JButton();
+        Logout1 = new javax.swing.JButton();
+        header = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        nama = new javax.swing.JLabel();
+        sebagai = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table_riwayat_penerimaan = new javax.swing.JTable();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        navbar.setBackground(new java.awt.Color(0, 102, 51));
+        navbar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("OCTANE");
+
+        catat_penerimaan_bbm.setBackground(new java.awt.Color(0, 102, 51));
+        catat_penerimaan_bbm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        catat_penerimaan_bbm.setForeground(new java.awt.Color(255, 255, 255));
+        catat_penerimaan_bbm.setText("Catat Penerimaan BBM");
+        catat_penerimaan_bbm.addActionListener(this::catat_penerimaan_bbmActionPerformed);
+
+        dashboard1.setBackground(new java.awt.Color(0, 102, 51));
+        dashboard1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        dashboard1.setForeground(new java.awt.Color(255, 255, 255));
+        dashboard1.setText("Dashboard");
+        dashboard1.addActionListener(this::dashboard1ActionPerformed);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Fuel for a Better Tomorrow");
+
+        catat_distribusi_bbm.setBackground(new java.awt.Color(0, 102, 51));
+        catat_distribusi_bbm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        catat_distribusi_bbm.setForeground(new java.awt.Color(255, 255, 255));
+        catat_distribusi_bbm.setText("Catat Distribusi BBM");
+        catat_distribusi_bbm.addActionListener(this::catat_distribusi_bbmActionPerformed);
+
+        stok_lokasi.setBackground(new java.awt.Color(0, 102, 51));
+        stok_lokasi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        stok_lokasi.setForeground(new java.awt.Color(255, 255, 255));
+        stok_lokasi.setText("Stok Lokasi");
+        stok_lokasi.addActionListener(this::stok_lokasiActionPerformed);
+
+        riwayat_penerimaan.setBackground(new java.awt.Color(0, 102, 51));
+        riwayat_penerimaan.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        riwayat_penerimaan.setForeground(new java.awt.Color(255, 255, 255));
+        riwayat_penerimaan.setText("Riwayat Penerimaan");
+        riwayat_penerimaan.addActionListener(this::riwayat_penerimaanActionPerformed);
+
+        riwayat_distribusi.setBackground(new java.awt.Color(0, 102, 51));
+        riwayat_distribusi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        riwayat_distribusi.setForeground(new java.awt.Color(255, 255, 255));
+        riwayat_distribusi.setText("Riwayat Distribusi");
+        riwayat_distribusi.addActionListener(this::riwayat_distribusiActionPerformed);
+
+        Logout1.setText("Logout");
+        Logout1.addActionListener(this::Logout1ActionPerformed);
+
+        javax.swing.GroupLayout navbarLayout = new javax.swing.GroupLayout(navbar);
+        navbar.setLayout(navbarLayout);
+        navbarLayout.setHorizontalGroup(
+            navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(navbarLayout.createSequentialGroup()
+                .addGroup(navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(navbarLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel1))
+                    .addGroup(navbarLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addGroup(navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Logout1)
+                            .addGroup(navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(catat_penerimaan_bbm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dashboard1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(catat_distribusi_bbm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(stok_lokasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(riwayat_penerimaan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(riwayat_distribusi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(38, Short.MAX_VALUE))
+        );
+        navbarLayout.setVerticalGroup(
+            navbarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(navbarLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(44, 44, 44)
+                .addComponent(dashboard1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addComponent(catat_penerimaan_bbm, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(catat_distribusi_bbm, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(stok_lokasi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(riwayat_penerimaan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(riwayat_distribusi, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Logout1)
+                .addGap(20, 20, 20))
+        );
+
+        header.setBackground(new java.awt.Color(255, 255, 255));
+        header.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setText("RIWAYAT PENERIMAAN");
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+
+        nama.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        nama.setText("NAMA");
+
+        sebagai.setText("Sebagai");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(133, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(sebagai)
+                    .addComponent(nama))
+                .addGap(14, 14, 14))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nama)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(sebagai)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
+        header.setLayout(headerLayout);
+        headerLayout.setHorizontalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39))
+        );
+        headerLayout.setVerticalGroup(
+            headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+
+        table_riwayat_penerimaan.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "ID PENERIMAAN", "TANGGAL", "JENIS BBM", "JUMLAH DITERIMA (LITER)", "PETUGAS PENCATAT"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.sql.Timestamp.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(table_riwayat_penerimaan);
+        if (table_riwayat_penerimaan.getColumnModel().getColumnCount() > 0) {
+            table_riwayat_penerimaan.getColumnModel().getColumn(0).setPreferredWidth(110);
+            table_riwayat_penerimaan.getColumnModel().getColumn(1).setPreferredWidth(175);
+            table_riwayat_penerimaan.getColumnModel().getColumn(2).setPreferredWidth(190);
+            table_riwayat_penerimaan.getColumnModel().getColumn(3).setPreferredWidth(175);
+            table_riwayat_penerimaan.getColumnModel().getColumn(4).setPreferredWidth(100);
+        }
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(navbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 908, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(61, 61, 61))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(header, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(navbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void dashboard1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dashboard1ActionPerformed
+        new DashboardPenyimpanan().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_dashboard1ActionPerformed
+
+    private void catat_penerimaan_bbmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catat_penerimaan_bbmActionPerformed
+        new CatatPenerimaanBBM().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_catat_penerimaan_bbmActionPerformed
+
+    private void catat_distribusi_bbmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_catat_distribusi_bbmActionPerformed
+        new CatatDistribusiBBM().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_catat_distribusi_bbmActionPerformed
+
+    private void stok_lokasiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stok_lokasiActionPerformed
+        new StokLokasi().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_stok_lokasiActionPerformed
+
+    private void riwayat_penerimaanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_riwayat_penerimaanActionPerformed
+        new RiwayatPenerimaan().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_riwayat_penerimaanActionPerformed
+
+    private void riwayat_distribusiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_riwayat_distribusiActionPerformed
+        new RiwayatDistribusi().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_riwayat_distribusiActionPerformed
+
+    private void Logout1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Logout1ActionPerformed
+        logout();
+    }//GEN-LAST:event_Logout1ActionPerformed
+
+    private void logout() {
+        int konfirmasi = JOptionPane.showConfirmDialog(
+                this,
+                "Apakah Anda yakin ingin keluar dari sistem?",
+                "Konfirmasi Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE
+        );
+
+        if (konfirmasi == JOptionPane.YES_OPTION) {
+            Session.clear();
+
+            new Login().setVisible(true);
+            this.dispose();
+        }
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+            logger.log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        java.awt.EventQueue.invokeLater(() -> new RiwayatPenerimaan().setVisible(true));
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Logout1;
+    private javax.swing.JButton catat_distribusi_bbm;
+    private javax.swing.JButton catat_penerimaan_bbm;
+    private javax.swing.JButton dashboard1;
+    private javax.swing.JPanel header;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel nama;
+    private javax.swing.JPanel navbar;
+    private javax.swing.JButton riwayat_distribusi;
+    private javax.swing.JButton riwayat_penerimaan;
+    private javax.swing.JLabel sebagai;
+    private javax.swing.JButton stok_lokasi;
+    private javax.swing.JTable table_riwayat_penerimaan;
+    // End of variables declaration//GEN-END:variables
+}
