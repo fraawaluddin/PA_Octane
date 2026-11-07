@@ -357,11 +357,15 @@ Halaman Login merupakan tampilan awal aplikasi OCTANE. Pengguna harus memasukkan
 
 <img width="1225" height="762" alt="image" src="https://github.com/user-attachments/assets/2f8e7af4-1ec4-40bc-83a3-185db465250f" />
 
+---
+
 **1.2 Login Administrator**
 
 Administrator memasukkan username dan password pada form Login. Setelah autentikasi berhasil, sistem akan mengarahkan Administrator ke halaman Dashboard.
 
 <img width="1228" height="762" alt="image" src="https://github.com/user-attachments/assets/099801aa-b0c7-46a3-b13e-98dffcfe1a24" />
+
+---
 
 #### 2. Demonstrasi Pengelolaan Data Administrator
 
@@ -371,11 +375,15 @@ Dashboard Administrator merupakan halaman utama yang menampilkan informasi dan m
 
 <img width="1682" height="947" alt="image" src="https://github.com/user-attachments/assets/7df1ac6f-2f0e-4f71-9d00-bfd4dffaf144" />
 
+---
+
 **2.2 Menampilkan Data Pengguna**
 
 Administrator membuka menu Pengguna untuk melihat daftar pengguna yang telah terdaftar dalam sistem. Data pengguna ditampilkan dalam bentuk tabel yang berisi informasi sesuai dengan atribut pengguna.
 
 <img width="1687" height="947" alt="image" src="https://github.com/user-attachments/assets/38e12a69-c310-4938-ab3d-a0dc800c7d13" />
+
+---
 
 **2.3 Menambahkan Data Pengguna**
 
@@ -383,7 +391,11 @@ Administrator memilih tombol Tambah untuk membuka form penambahan pengguna. Sela
 
 <img width="1695" height="947" alt="image" src="https://github.com/user-attachments/assets/7c0a9e58-d110-4089-81a7-1a92b0a38d75" />
 
+---
+
 <img width="1130" height="391" alt="image" src="https://github.com/user-attachments/assets/d0c5c2cf-c7a6-4e04-8a3e-49af5bab6f62" />
+
+---
 
 **2.4 Mengubah Data Pengguna**
 
@@ -391,7 +403,11 @@ Administrator memilih salah satu data pengguna pada tabel, kemudian menekan tomb
 
 <img width="1681" height="943" alt="image" src="https://github.com/user-attachments/assets/10fd0561-ed20-4066-a701-e7357c3dc28c" />
 
+---
+
 <img width="1127" height="398" alt="image" src="https://github.com/user-attachments/assets/3fb2e289-4308-4af8-b502-17b0453a6d00" />
+
+---
 
 **2.5 Menghapus atau Menonaktifkan Data Pengguna**
 
@@ -399,15 +415,23 @@ Administrator memilih data pengguna yang akan dihapus atau dinonaktifkan, kemudi
 
 <img width="1685" height="945" alt="image" src="https://github.com/user-attachments/assets/dc8da6e5-9db7-42df-8afd-715a97ef44dd" />
 
+---
+
 <img width="1678" height="946" alt="image" src="https://github.com/user-attachments/assets/75d5d975-37ae-4405-be9d-92a23f7b9dc1" />
 
+---
+
 <img width="1121" height="396" alt="image" src="https://github.com/user-attachments/assets/83fbb3c1-02e8-483e-ad88-29b350edb627" />
+
+---
 
 **2.6 Menampilkan Data Jenis BBM**
 
 Administrator membuka menu Jenis BBM untuk melihat daftar jenis bahan bakar yang telah terdaftar dalam sistem.
 
 <img width="1686" height="946" alt="image" src="https://github.com/user-attachments/assets/9e5436d0-7d7c-4188-b327-f63a5c58486d" />
+
+---
 
 **2.7 Menambahkan dan Mengelola Data Jenis BBM**
 
@@ -417,17 +441,25 @@ Pada tahap ini dilakukan penambahan data jenis BBM
 
 <img width="1686" height="947" alt="image" src="https://github.com/user-attachments/assets/10c0f694-16ca-4a63-8e5f-e5ccad097a79" />
 
+---
+
 Pada tahap ini ditampilkan bahwa data yang sudah ditambahkan telah berhasil muncul pada tabel
 
 <img width="1256" height="336" alt="image" src="https://github.com/user-attachments/assets/4230dfed-27a1-43f2-9564-3460c5a9aea3" />
+
+---
 
 Pada tahap ini dilakukan perubahan nama pada jenis bbm dengan tombol ubah
 
 <img width="1687" height="942" alt="image" src="https://github.com/user-attachments/assets/12498c27-cbd2-48c9-a03b-5ec47fa8cff4" />
 
+---
+
 Pada tahap ini dilakukan penghapusan data pada jenis bbm yang tadi sudah ditambahkan
 
 <img width="1686" height="943" alt="image" src="https://github.com/user-attachments/assets/57b2ef8c-5e7f-487e-bf9b-569a3d5e12fb" />
+
+---
 
 **2.8 Menampilkan dan Mengelola Data Lokasi**
 
@@ -435,11 +467,15 @@ Administrator membuka menu Lokasi untuk melihat data lokasi yang digunakan dalam
 
 Berikut adalah menu Kelola lokasi penyimpanan beserta fitur fiturnya
 
-<img width="1682" height="942" alt="image" src="https://github.com/user-attachments/assets/5a5d7342-ff6f-49da-bed9-5d9a17612ec1" />
+<img width="1686" height="941" alt="image" src="https://github.com/user-attachments/assets/ba0b9e81-4b38-4741-b549-92a036a1d447" />
+
+---
 
 Berikut adalah menu Kelola SPBU beserta fitur fiturnya
 
-<img width="1681" height="946" alt="image" src="https://github.com/user-attachments/assets/12e25f7d-3397-4b11-8297-69a533ab95e8" />
+<img width="1681" height="946" alt="image" src="https://github.com/user-attachments/assets/910c358a-2ae2-4c38-9419-8daa1840ef63" />
+
+---
 
 **2.9 Menambahkan Data Lokasi Penyimpanan atau SPBU**
 
@@ -447,15 +483,93 @@ Administrator mengisi informasi lokasi berdasarkan jenis lokasi yang akan didaft
 
 Pada tahap ini dilakukan penambahan lokasi penyimpanan
 
-<img width="1678" height="947" alt="image" src="https://github.com/user-attachments/assets/39a4f652-a157-4308-9aad-09ec82092f0a" />
+<img width="1680" height="945" alt="image" src="https://github.com/user-attachments/assets/79fe7621-aa76-4a94-bc1e-af59b6a682fe" />
 
+---
 
+Selain itu bisa dilakukan pengubahan data pada lokasi penyimpanan
+
+<img width="1678" height="937" alt="image" src="https://github.com/user-attachments/assets/3e031f08-df3f-4569-ba65-8eb01d49ffd0" />
+
+---
+
+Selain itu bisa dilakukan nonaktif akun pada tombol ubah status
+
+<img width="1682" height="946" alt="image" src="https://github.com/user-attachments/assets/11561d9c-6f56-4947-9b7c-8d8e739fbe16" />
+
+---
+
+Lalu bisa dilakukan penghapusan data spbu
+
+<img width="1680" height="942" alt="image" src="https://github.com/user-attachments/assets/7c7eb1a1-50cf-4bab-bb70-3698d2002903" />
+
+---
 
 Pada tahap ini dilakukan penambahan SPBU
 
-<img width="1682" height="946" alt="image" src="https://github.com/user-attachments/assets/0a8f2583-7d36-4345-8303-bd09ce8e66e5" />
+<img width="1672" height="943" alt="image" src="https://github.com/user-attachments/assets/3f6f7046-63a6-45e6-9bec-4ea63eb0cc4a" />
 
+---
 
+Pada tahap ini data spbu bisa diubah, contohnya alamat 
+
+<img width="1677" height="941" alt="image" src="https://github.com/user-attachments/assets/d3e9564a-bd15-4049-9dc4-bfe7799d0a2d" />
+
+---
+
+Pada tahap ini dilakukan perubahan status jika spbu tidak lagi aktif
+
+<img width="1670" height="937" alt="image" src="https://github.com/user-attachments/assets/d2f590c3-a025-4636-b5dd-fdd0a8c1a864" />
+
+---
+
+Jika kita menekan tombol hapus, maka data yang belum memiliki transaksi akan terhapus
+
+<img width="1691" height="951" alt="image" src="https://github.com/user-attachments/assets/aedaf9ee-1d9f-493e-b3a0-fe4b59889b42" />
+
+---
+
+**2.10 Menampilkan Stok Seluruh lokasi dan SPBU**
+
+Stok seluruh lokasi dan spbu ialah stok bahan bakar pada tempat tersebut, seperti pertalite, pertamax, solar dan lain lain.
+
+<img width="1681" height="935" alt="image" src="https://github.com/user-attachments/assets/4a426f5e-c74e-467f-ae26-cde5fa7e3992" />
+
+---
+
+<img width="1685" height="942" alt="image" src="https://github.com/user-attachments/assets/91134364-5d63-47c8-81c2-639cb393dbe3" />
+
+---
+
+**2.11 Riwayat Distribusi dan Riwayat Penerimaan**
+
+Riwayat distribusi dan penerimaan ialah ialah riwayat yang terhubung antara lokasi penyimpanan dengan spbu.
+
+Bisa dilihat berikut adalah data riwayat penerimaan yang dimana bbm dikirim ke lokasi penyimpanan
+
+<img width="1690" height="947" alt="image" src="https://github.com/user-attachments/assets/459bed5b-f0d1-4fcd-86ca-b828a826a266" />
+
+---
+
+Bisa dilihat berikut merupakan data dari riwayat distribusi yang dilakukan dari petugas penyimpanan ke spbu
+
+<img width="1675" height="947" alt="image" src="https://github.com/user-attachments/assets/e888a051-643f-4b5d-85a4-881c97c70ae8" />
+
+---
+
+**2.11 Laporan Persediaan dan Distribusi**
+
+Laporan persediaan dan distribusi merupakan laporan tentang data penerimaan, distribusi, stok gudang, dan stok spbu.
+
+<img width="1712" height="996" alt="image" src="https://github.com/user-attachments/assets/66d4c371-de78-4c5b-96c7-198e5f33dfcd" />
+
+---
+
+di bagian bawah juga terdapat menu filter untuk memfilter laporan berdasarkan tanggal, jenis bbm, dan lokasi penyimpanan
+
+<img width="1712" height="991" alt="image" src="https://github.com/user-attachments/assets/433a7187-f09b-4553-9313-8f27227a15e7" />
+
+---
 
 #### 3. Demonstrasi Penerimaan BBM oleh Petugas Penyimpanan
 
@@ -463,25 +577,33 @@ Pada tahap ini dilakukan penambahan SPBU
 
 Petugas Penyimpanan melakukan login menggunakan akun yang telah dibuat oleh Administrator. Setelah berhasil masuk, sistem menampilkan Dashboard Petugas Penyimpanan.
 
-![Dashboard Petugas Penyimpanan](docs/screenshots/demo/13-dashboard-petugas-penyimpanan.png)
+<img width="1680" height="945" alt="image" src="https://github.com/user-attachments/assets/558ca25b-475b-4e15-9f6c-3058516e7dd2" />
+
+---
 
 **3.2 Menampilkan Data Penerimaan BBM**
 
 Petugas Penyimpanan membuka menu Penerimaan BBM untuk melihat daftar transaksi penerimaan yang telah tercatat dalam sistem.
 
-![Data Penerimaan BBM](docs/screenshots/demo/14-data-penerimaan-bbm.png)
+<img width="1673" height="942" alt="image" src="https://github.com/user-attachments/assets/e86924f4-fca3-42de-ba30-3e77bc7fb627" />
+
+---
 
 **3.3 Menambahkan Data Penerimaan BBM**
 
-Petugas Penyimpanan memilih tombol Tambah untuk membuka form penerimaan BBM. Petugas kemudian mengisi informasi penerimaan sesuai data yang tersedia, seperti jenis BBM, jumlah penerimaan, lokasi penyimpanan, serta informasi lainnya yang diminta oleh sistem. Setelah selesai, data disimpan ke dalam database.
+Petugas penyimpanan memasukkan jenis bbm yang diterima, dan juga jumlah yang diterima, kemudian menekan simpan penerimaan
 
-![Form Tambah Penerimaan BBM](docs/screenshots/demo/15-form-penerimaan-bbm.png)
+<img width="1686" height="945" alt="image" src="https://github.com/user-attachments/assets/d8269289-f285-462c-8884-eb34b8ff5a66" />
 
+---
+ 
 **3.4 Melihat Hasil Penerimaan BBM**
 
 Setelah data berhasil disimpan, transaksi penerimaan akan ditampilkan pada tabel. Petugas dapat memeriksa kembali informasi penerimaan yang telah dimasukkan.
 
-![Hasil Penerimaan BBM](docs/screenshots/demo/16-hasil-penerimaan-bbm.png)
+<img width="1682" height="946" alt="image" src="https://github.com/user-attachments/assets/7b51ccf5-0c2e-49f4-8110-b012d6de9419" />
+
+---
 
 #### 4. Demonstrasi Distribusi BBM oleh Petugas Penyimpanan
 
@@ -489,19 +611,33 @@ Setelah data berhasil disimpan, transaksi penerimaan akan ditampilkan pada tabel
 
 Petugas Penyimpanan membuka menu Distribusi BBM untuk melihat daftar transaksi distribusi yang telah tercatat dalam sistem.
 
-![Data Distribusi BBM](docs/screenshots/demo/17-data-distribusi-bbm.png)
+<img width="1680" height="940" alt="image" src="https://github.com/user-attachments/assets/7c9f379e-0a56-4a68-b291-4f0888b1e68d" />
+
+---
 
 **4.2 Menambahkan Data Distribusi BBM**
 
 Petugas memilih tombol Tambah untuk membuka form distribusi. Selanjutnya, Petugas menentukan jenis BBM, lokasi asal, SPBU tujuan, dan jumlah BBM yang akan didistribusikan sesuai informasi yang tersedia pada form.
 
-![Form Distribusi BBM](docs/screenshots/demo/18-form-distribusi-bbm.png)
+<img width="1682" height="947" alt="image" src="https://github.com/user-attachments/assets/87808aad-1c7a-4813-b8f5-58a68e263596" />
+
+---
 
 **4.3 Melihat Hasil Distribusi BBM**
 
 Setelah transaksi disimpan, data distribusi akan ditampilkan pada tabel. Informasi tersebut digunakan untuk memantau pengiriman BBM dari lokasi penyimpanan menuju SPBU.
 
-![Hasil Distribusi BBM](docs/screenshots/demo/19-hasil-distribusi-bbm.png)
+<img width="1686" height="942" alt="image" src="https://github.com/user-attachments/assets/477e719c-b80f-4c50-a947-a990f5c10c3c" />
+
+---
+
+**4.4 Stok Lokasi**
+
+Pada menu ini bisa dilihat stok lokasi penyimpanan tempat petugas bertugas
+
+<img width="1686" height="947" alt="image" src="https://github.com/user-attachments/assets/6fa71566-de0c-4403-aabd-a332a36da12e" />
+
+---
 
 #### 5. Demonstrasi Konfirmasi Penerimaan oleh Petugas SPBU
 
@@ -509,25 +645,33 @@ Setelah transaksi disimpan, data distribusi akan ditampilkan pada tabel. Informa
 
 Petugas SPBU melakukan login menggunakan akun yang telah terdaftar. Setelah berhasil masuk, sistem menampilkan Dashboard Petugas SPBU.
 
-![Dashboard Petugas SPBU](docs/screenshots/demo/20-dashboard-petugas-spbu.png)
+<img width="1680" height="937" alt="image" src="https://github.com/user-attachments/assets/0a1f05a4-0052-408d-89c5-3f6853eaaa1d" />
+
+---
 
 **5.2 Menampilkan Data Distribusi Masuk**
 
 Petugas SPBU membuka menu penerimaan atau konfirmasi distribusi untuk melihat informasi pengiriman BBM yang ditujukan kepada SPBU tersebut.
 
-![Data Distribusi Masuk](docs/screenshots/demo/21-data-distribusi-masuk.png)
+<img width="1681" height="947" alt="Cuplikan layar 2026-11-07 194534" src="https://github.com/user-attachments/assets/90144c38-3a09-4226-bffb-6c5d72b52808" />
+
+---
 
 **5.3 Melakukan Konfirmasi Penerimaan BBM**
 
 Petugas SPBU memilih transaksi yang akan dikonfirmasi, memeriksa informasi pengiriman, kemudian melakukan konfirmasi penerimaan sesuai kondisi transaksi dan fitur yang tersedia pada aplikasi.
 
-![Konfirmasi Penerimaan BBM](docs/screenshots/demo/22-konfirmasi-penerimaan-bbm.png)
+<img width="1681" height="946" alt="image" src="https://github.com/user-attachments/assets/4c8a7b38-f175-4d12-84e6-6a71ec784498" />
+
+---
 
 **5.4 Melihat Riwayat Distribusi**
 
 Setelah proses konfirmasi dilakukan, Petugas SPBU dapat melihat riwayat distribusi untuk memeriksa transaksi yang telah diterima dan statusnya.
 
-![Riwayat Distribusi](docs/screenshots/demo/23-riwayat-distribusi.png)
+<img width="1680" height="946" alt="image" src="https://github.com/user-attachments/assets/fd70c48e-7030-4569-9efe-24fb8edca196" />
+
+---
 
 #### 6. Demonstrasi Pemeriksaan Stok BBM
 
@@ -535,13 +679,9 @@ Setelah proses konfirmasi dilakukan, Petugas SPBU dapat melihat riwayat distribu
 
 Pengguna membuka menu Stok BBM untuk melihat informasi ketersediaan BBM berdasarkan data transaksi yang telah tercatat dalam sistem.
 
-![Informasi Stok BBM](docs/screenshots/demo/24-informasi-stok-bbm.png)
+<img width="1680" height="943" alt="image" src="https://github.com/user-attachments/assets/9516ede6-382b-444e-b1f1-e672d92a14bd" />
 
-**6.2 Memeriksa Perubahan Stok**
-
-Pengguna memeriksa perubahan jumlah stok setelah proses penerimaan dan distribusi BBM. Informasi ini digunakan untuk memastikan pencatatan persediaan sesuai dengan transaksi yang dilakukan.
-
-![Perubahan Stok BBM](docs/screenshots/demo/25-perubahan-stok-bbm.png)
+---
 
 #### 7. Logout
 
@@ -549,17 +689,22 @@ Pengguna memeriksa perubahan jumlah stok setelah proses penerimaan dan distribus
 
 Setelah selesai menggunakan aplikasi, pengguna menekan tombol Logout untuk mengakhiri sesi. Sistem kemudian mengarahkan pengguna kembali ke halaman Login.
 
-![Logout](docs/screenshots/demo/26-logout.png)
+<img width="1682" height="946" alt="image" src="https://github.com/user-attachments/assets/5c44ce09-7a05-462f-8f1b-8c1d4abfa0e2" />
+
+---
+
+<img width="1227" height="760" alt="image" src="https://github.com/user-attachments/assets/17b04123-4db0-43a1-8f7c-7e5ce590470d" />
+
+---
 
 ## Tim Pengembang
 
 | No. | Nama | NIM |
 |:---:|---|---|
-| 1 | [Nama anggota] | [NIM] |
-| 2 | [Nama anggota] | [NIM] |
-| 3 | [Nama anggota] | [NIM] |
-| 4 | [Nama anggota] | [NIM] |
-| 5 | [Nama anggota] | [NIM] |
+| 1 | [Yeheskiel Darmawan] | [2509116027] |
+| 2 | [Dhiyya Rizky Akhmad Wijaya] | [2509116042] |
+| 3 | [Muhammad Farel Awaluddin] | [2509116055] |
+| 4 | [Khairul Ikhsan] | [2509116097] |
 
 ---
 
