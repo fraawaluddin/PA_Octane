@@ -13,8 +13,7 @@ public class DashboardAdmin extends javax.swing.JFrame {
     
     public DashboardAdmin() {
         initComponents();
-
-        // Pastikan tombol riwayat admin memiliki aksi klik yang aktif.
+        
         for (java.awt.event.ActionListener listener : penerimaan.getActionListeners()) {
             penerimaan.removeActionListener(listener);
         }

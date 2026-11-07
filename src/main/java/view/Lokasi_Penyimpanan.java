@@ -87,18 +87,40 @@ public class Lokasi_Penyimpanan extends javax.swing.JFrame {
     }
 
     private void initTableEvents() {
-        table_lokasi_penyimpanan.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        table_lokasi_penyimpanan.getSelectionModel().addListSelectionListener(evt -> {
-            if (!evt.getValueIsAdjusting()) {
-                boolean dipilih = table_lokasi_penyimpanan.getSelectedRow() >= 0;
-                btnUbah.setEnabled(dipilih);
-                btnHapus.setEnabled(dipilih);
-                btnStatus.setEnabled(dipilih);
-            }
-        });
+        table_lokasi_penyimpanan.setSelectionMode(
+            javax.swing.ListSelectionModel.SINGLE_SELECTION
+        );
+        
+        btnUbah.setEnabled(false);
+        btnHapus.setEnabled(false);
+        btnStatus.setEnabled(false);
+        btnBatal.setEnabled(false);
+
+        table_lokasi_penyimpanan.getSelectionModel()
+            .addListSelectionListener(evt -> {
+                if (!evt.getValueIsAdjusting()) {
+                    boolean dipilih =
+                        table_lokasi_penyimpanan.getSelectedRow() >= 0;
+
+                    btnUbah.setEnabled(dipilih);
+                    btnHapus.setEnabled(dipilih);
+                    btnStatus.setEnabled(dipilih);
+                }
+            });
+        
+        btnUbah.addActionListener(e -> mulaiUbahLokasi());
+
+        btnHapus.addActionListener(e -> hapusLokasiTerpilih());
+        
+        btnStatus.addActionListener(e -> ubahStatusLokasiTerpilih());
+        
+        btnBatal.addActionListener(e -> batalUbahLokasi());
+        
         table_lokasi_penyimpanan.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && table_lokasi_penyimpanan.getSelectedRow() >= 0) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2
+                        && table_lokasi_penyimpanan.getSelectedRow() >= 0) {
                     mulaiUbahLokasi();
                 }
             }
@@ -133,33 +155,96 @@ public class Lokasi_Penyimpanan extends javax.swing.JFrame {
     }
 
     private void hapusLokasiTerpilih() {
-        int rowView = table_lokasi_penyimpanan.getSelectedRow();
-        if (rowView < 0) return;
-        deleteLokasi(table_lokasi_penyimpanan.convertRowIndexToModel(rowView));
-        batalUbahLokasi();
+        int row = table_lokasi_penyimpanan.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Pilih data lokasi terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        deleteLokasi(row);
     }
 
     private void ubahStatusLokasiTerpilih() {
-        int rowView = table_lokasi_penyimpanan.getSelectedRow();
-        if (rowView < 0) return;
-        toggleStatusLokasi(table_lokasi_penyimpanan.convertRowIndexToModel(rowView));
-        batalUbahLokasi();
+        int row = table_lokasi_penyimpanan.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Pilih data lokasi terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        toggleStatusLokasi(row);
     }
 
-    public void openEditDialog(int row) {
-        int id = (int) table_lokasi_penyimpanan.getValueAt(row, 0);
-        String namaAwal = table_lokasi_penyimpanan.getValueAt(row, 1).toString();
-        String alamatAwal = table_lokasi_penyimpanan.getValueAt(row, 2).toString();
-        String namaBaru = JOptionPane.showInputDialog(this, "Nama Lokasi:", namaAwal);
-        if (namaBaru == null) return;
-        String alamatBaru = JOptionPane.showInputDialog(this, "Alamat:", alamatAwal);
-        if (alamatBaru == null) return;
+    public void openEditDialog(int rowView) {
+        if (rowView < 0
+                || rowView >= table_lokasi_penyimpanan.getRowCount()) {
+            return;
+        }
+
+        int row = table_lokasi_penyimpanan.convertRowIndexToModel(rowView);
+
+        int id = Integer.parseInt(
+            table_lokasi_penyimpanan.getModel()
+                .getValueAt(row, 0).toString()
+        );
+
+        String namaAwal = table_lokasi_penyimpanan.getModel()
+            .getValueAt(row, 1).toString();
+
+        String alamatAwal = table_lokasi_penyimpanan.getModel()
+            .getValueAt(row, 2).toString();
+
+        String namaBaru = JOptionPane.showInputDialog(
+            this,
+            "Nama Lokasi:",
+            namaAwal
+        );
+
+        if (namaBaru == null) {
+            return;
+        }
+
+        String alamatBaru = JOptionPane.showInputDialog(
+            this,
+            "Alamat:",
+            alamatAwal
+        );
+
+        if (alamatBaru == null) {
+            return;
+        }
+
         try {
             lokasiController.ubah(id, namaBaru, alamatBaru);
+
+            batalUbahLokasi();
             tampilDataLokasi();
-            JOptionPane.showMessageDialog(this, "Data lokasi berhasil diperbarui.");
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Data lokasi berhasil diperbarui.",
+                "Berhasil",
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
         } catch (IllegalArgumentException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage(), "Gagal Mengubah", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(
+                this,
+                ex.getMessage(),
+                "Gagal Mengubah",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 

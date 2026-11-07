@@ -92,18 +92,38 @@ public class SPBU extends javax.swing.JFrame {
     }
 
     private void initTableEvents() {
-        table_spbu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        table_spbu.setSelectionMode(
+            javax.swing.ListSelectionModel.SINGLE_SELECTION
+        );
+       
+        btnUbah.setEnabled(false);
+        btnHapus.setEnabled(false);
+        btnStatus.setEnabled(false);
+        btnBatal.setEnabled(false);
+
         table_spbu.getSelectionModel().addListSelectionListener(evt -> {
             if (!evt.getValueIsAdjusting()) {
                 boolean dipilih = table_spbu.getSelectedRow() >= 0;
+
                 btnUbah.setEnabled(dipilih);
                 btnHapus.setEnabled(dipilih);
                 btnStatus.setEnabled(dipilih);
             }
         });
+        
+        btnUbah.addActionListener(e -> mulaiUbahSpbu());
+        
+        btnHapus.addActionListener(e -> hapusSpbuTerpilih());
+       
+        btnStatus.addActionListener(e -> ubahStatusSpbuTerpilih());
+       
+        btnBatal.addActionListener(e -> batalUbahSpbu());
+        
         table_spbu.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && table_spbu.getSelectedRow() >= 0) {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2
+                        && table_spbu.getSelectedRow() >= 0) {
                     mulaiUbahSpbu();
                 }
             }
@@ -138,28 +158,53 @@ public class SPBU extends javax.swing.JFrame {
     }
 
     private void hapusSpbuTerpilih() {
-        int rowView = table_spbu.getSelectedRow();
-        if (rowView < 0) return;
-        deleteSpbu(table_spbu.convertRowIndexToModel(rowView));
-        batalUbahSpbu();
+        int row = table_spbu.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Pilih data SPBU terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        deleteSpbu(row);
     }
 
     private void ubahStatusSpbuTerpilih() {
-        int rowView = table_spbu.getSelectedRow();
-        if (rowView < 0) return;
-        toggleStatusSpbu(table_spbu.convertRowIndexToModel(rowView));
-        batalUbahSpbu();
+        int row = table_spbu.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Pilih data SPBU terlebih dahulu.",
+                "Peringatan",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
+        toggleStatusSpbu(row);
     }
 
-    public void openEditDialog(int row) {
+    public void openEditDialog(int rowView) {
+        if (rowView < 0 || rowView >= table_spbu.getRowCount()) {
+            return;
+        }
 
-        int idSpbu = (int) table_spbu.getValueAt(row, 0);
+        int row = table_spbu.convertRowIndexToModel(rowView);
+
+        int idSpbu = Integer.parseInt(
+            table_spbu.getModel().getValueAt(row, 0).toString()
+        );
 
         String currentNama =
-                table_spbu.getValueAt(row, 1).toString();
+            table_spbu.getModel().getValueAt(row, 1).toString();
 
         String currentAlamat =
-                table_spbu.getValueAt(row, 2).toString();
+            table_spbu.getModel().getValueAt(row, 2).toString();
 
         UbahDataSPBU dialog = new UbahDataSPBU(
             this,
@@ -168,25 +213,21 @@ public class SPBU extends javax.swing.JFrame {
             currentAlamat
         );
 
+        dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
 
         if (!dialog.isBerhasilDisimpan()) {
             return;
         }
 
-        String newNama = dialog.getNamaSPBU();
-        String newAlamat = dialog.getAlamatSPBU();
-
         try {
-
             boolean berhasil = spbuController.ubahSpbu(
                 idSpbu,
-                newNama,
-                newAlamat
+                dialog.getNamaSPBU(),
+                dialog.getAlamatSPBU()
             );
 
             if (berhasil) {
-
                 JOptionPane.showMessageDialog(
                     this,
                     "Data SPBU berhasil diperbarui!",
@@ -194,10 +235,9 @@ public class SPBU extends javax.swing.JFrame {
                     JOptionPane.INFORMATION_MESSAGE
                 );
 
+                batalUbahSpbu();
                 loadTableData();
-
             } else {
-
                 JOptionPane.showMessageDialog(
                     this,
                     "Data SPBU tidak ditemukan atau tidak mengalami perubahan.",
@@ -207,16 +247,13 @@ public class SPBU extends javax.swing.JFrame {
             }
 
         } catch (IllegalArgumentException e) {
-
             JOptionPane.showMessageDialog(
                 this,
                 e.getMessage(),
                 "Peringatan",
                 JOptionPane.WARNING_MESSAGE
             );
-
         } catch (SQLException e) {
-
             JOptionPane.showMessageDialog(
                 this,
                 "Gagal memperbarui data SPBU: " + e.getMessage(),
