@@ -6,7 +6,7 @@ Program Studi Sistem Informasi · Fakultas Teknik · Universitas Mulawarman
 
 ---
 
-## Gambaran Proyek
+## Deskripsi Singkat
 
 OCTANE adalah aplikasi desktop untuk membantu pencatatan persediaan dan proses distribusi bahan bakar minyak (BBM). Aplikasi ini menghubungkan aktivitas administrator, petugas penyimpanan, dan petugas SPBU melalui data yang tersimpan pada database.
 
@@ -56,7 +56,7 @@ Secara umum, proses distribusi BBM pada OCTANE berjalan melalui tahapan berikut:
 | `SELESAI` | Distribusi telah selesai |
 | `SELESAI_DITANGANI` | Tindak lanjut pemeriksaan telah diselesaikan |
 
-## Teknologi yang Digunakan
+## Tech Stach
 
 | Komponen | Teknologi |
 |---|---|
@@ -75,26 +75,53 @@ Secara umum, proses distribusi BBM pada OCTANE berjalan melalui tahapan berikut:
 
 Dokumen rancangan digunakan sebagai acuan dalam pengembangan fitur dan struktur database.
 
-| Dokumen | Keterangan | Lokasi berkas |
+| Dokumen | Keterangan | 
 |---|---|---|
-| Flowchart | Urutan proses dan alur kerja aplikasi | `docs/Flowchart.pdf` |
-| Use Case Diagram | Interaksi aktor dengan fitur sistem | `docs/Use-Case-Diagram.pdf` |
-| ERD Logical | Gambaran entitas, atribut, dan hubungan | `docs/ERD-Logical.png` |
-| ERD Relational | Rancangan relasi tabel database | `docs/ERD-Relational.png` |
+| Flowchart | Urutan proses dan alur kerja aplikasi | 
+| Use Case Diagram | Interaksi aktor dengan fitur sistem | 
+| ERD Logical | Gambaran entitas, atribut, dan hubungan | 
+| ERD Relational | Rancangan relasi tabel database | 
 
 ### Flowchart
 ![Flowchart OCTANE](docs/Flowchart.png)
 
+
+
 ### Use Case Diagram
-![Use Case OCTANE](docs/Use-Case-Diagram.png)
+
+Use Case Diagram menggambarkan interaksi antara tiga aktor dengan sistem OCTANE, yaitu Administrator, Petugas Penyimpanan, dan Petugas SPBU. Setiap aktor memiliki hak akses dan aktivitas sesuai dengan tanggung jawabnya.
+
+Administrator: Mengelola akun pengguna, data SPBU, jenis BBM, lokasi penyimpanan, melihat stok, riwayat penerimaan dan distribusi, serta laporan persediaan dan distribusi.
+
+Petugas Penyimpanan: Mencatat penerimaan dan distribusi BBM, melihat stok lokasi penyimpanan, serta melihat riwayat penerimaan dan distribusi.
+
+Petugas SPBU: Melihat pengiriman, melakukan konfirmasi penerimaan BBM, melihat stok SPBU, serta melihat riwayat distribusi BBM SPBU.
+
+Setiap aktor harus melakukan login sebelum mengakses fitur sistem sesuai dengan hak akses masing-masing.
+
+<img width="362" height="203" alt="image" src="https://github.com/user-attachments/assets/e380a4ec-9c35-4bc9-bc5e-2798ed81d0b2" />
+
+---
 
 ### ERD Logical
-![ERD Logical OCTANE](docs/ERD-Logical.png)
+
+Logical ERD OCTANE menggambarkan struktur database beserta atribut dan hubungan antarentitas yang digunakan dalam sistem. Terdapat 12 entitas, yaitu Pengguna, Administrator, Petugas Penyimpanan, Petugas SPBU, Lokasi Penyimpanan, SPBU, Jenis BBM, Penerimaan BBM, Distribusi BBM, Konfirmasi Penerimaan, Stok Penyimpanan, dan Stok SPBU.
+
+Setiap entitas saling terhubung untuk mendukung proses pengelolaan pengguna, pencatatan penerimaan BBM, distribusi ke SPBU, konfirmasi penerimaan, serta pemantauan persediaan BBM di setiap lokasi.
+
+<img width="1219" height="785" alt="Logical_PA" src="https://github.com/user-attachments/assets/9c7bb723-47ae-41a1-911e-6ff990ca4360" />
+
+---
 
 ### ERD Relational
-![ERD Relational OCTANE](docs/ERD-Relational.png)
 
-> Nama berkas pada tabel dan tautan gambar perlu disamakan dengan nama dokumen yang benar-benar disimpan di repository.
+Relational ERD merupakan pengembangan dari Logical ERD ke dalam bentuk tabel-tabel database yang dilengkapi dengan tipe data, Primary Key (PK), dan Foreign Key (FK). Pada rancangan ini, terdapat 12 tabel yang saling berhubungan untuk mendukung pengelolaan pengguna, lokasi penyimpanan, SPBU, jenis BBM, penerimaan, distribusi, konfirmasi penerimaan, serta pencatatan stok BBM.
+
+Setiap hubungan antar tabel dibentuk menggunakan Primary Key dan Foreign Key agar keterkaitan data tetap terstruktur dan terintegrasi. Rancangan ini menjadi dasar dalam implementasi database OCTANE menggunakan MySQL.
+
+<img width="1917" height="918" alt="Relational_PA" src="https://github.com/user-attachments/assets/9b3b62dd-fdb5-4e91-80aa-c4668ff5fc97" />
+
+---
 
 ## Susunan Source Code
 
@@ -104,8 +131,6 @@ OCTANE menggunakan susunan proyek Maven. Kode dipisahkan ke dalam package agar t
 OCTANE/
 ├── database/
 │   └── octane_db.sql
-├── docs/
-├── screenshots/
 └── src/
     └── main/
         └── java/
@@ -119,6 +144,12 @@ OCTANE/
                 ├── Form.java
                 └── Form.form
 ```
+
+---
+
+<img width="268" height="448" alt="image" src="https://github.com/user-attachments/assets/e5ceccc6-2e30-4bde-b48a-12f4d5d2414f" />
+
+---
 
 | Package | Peran |
 |---|---|
